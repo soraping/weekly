@@ -63,7 +63,7 @@ def parse_body(message, dir_path):
 
 
 def get_email(imapserver):
-    typ, data = imapserver.search(None, '(HEADER FROM "zhangdongdong@qianmi.com")')
+    typ, data = imapserver.search(None, '(HEADER FROM "xxxx@sina.com")')
     msgList = data[0].split()
     latest = msgList[len(msgList) - 1]
     typ2, data2 = imapserver.fetch(latest, '(RFC822)')
