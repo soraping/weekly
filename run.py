@@ -35,9 +35,8 @@ def temp_email_dir():
     return temp_dir
 
 
-def imap_server(config):
+def imap_server(config_email):
     # 接收邮件
-    config_email = config['email']
     imapserver = imaplib.IMAP4_SSL(config_email['imapserver'], config_email['imapport'])
     imapserver.login(config_email['user'], config_email['password'])
     imapserver.select("INBOX")
@@ -62,8 +61,9 @@ def parse_body(message, dir_path):
                 f.write(file_data)
 
 
-def get_email(imapserver):
-    typ, data = imapserver.search(None, '(HEADER FROM "xxxx@sina.com")')
+def get_email(imapserver, from_email):
+    search_criteria = '(HEADER FROM "' + from_email + '")'
+    typ, data = imapserver.search(None, search_criteria)
     msgList = data[0].split()
     latest = msgList[len(msgList) - 1]
     typ2, data2 = imapserver.fetch(latest, '(RFC822)')
@@ -72,8 +72,10 @@ def get_email(imapserver):
 
 
 if __name__ == '__main__':
-    imapserver = imap_server(config)
-    message = get_email(imapserver)
+    imapserver = imap_server(config['email'])
+    # 发送来源
+    from_users = config['from']
+    message = get_email(imapserver, from_users[0])
     # 存放附件的路径
     temp_dir = temp_email_dir()
     parse_body(message, temp_dir)
