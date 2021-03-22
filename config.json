@@ -1,0 +1,12 @@
+{
+  "to": ["xxx@sina.com"],
+  "from": ["xxx@sina.com"],
+  "email": {
+    "imapserver": "imap.exmail.qq.com",
+    "imapport": 993,
+    "smtpserver": "smtp.exmail.qq.com",
+    "smtpport": 465,
+    "user": "xxx@sina.com",
+    "password": "xxxx"
+  }
+}
